@@ -30,13 +30,15 @@ function PromoBar() {
   const { data } = useFetch(`${BACKEND}/api/config/promo`, { message: '', active: false, background: '#e6f4f1', text_color: '#083c3a' })
   if (!data?.active || dismissed) return null
   return (
-    <div className="sticky top-0 z-50" style={{ background: data.background, color: data.text_color }}>
+    <div className="sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-2 text-sm">
-          <span className="truncate">{data.message}</span>
-          <button aria-label="Dismiss" onClick={() => { localStorage.setItem('promoDismissed','1'); setDismissed(true) }} className="/group p-1 rounded hover:bg-black/5">
-            <X size={16} />
-          </button>
+        <div className="mt-2 glass rounded-xl px-4">
+          <div className="flex items-center justify-between py-2 text-sm" style={{ color: data.text_color }}>
+            <span className="truncate" style={{ color: data.text_color }}>{data.message}</span>
+            <button aria-label="Dismiss" onClick={() => { localStorage.setItem('promoDismissed','1'); setDismissed(true) }} className="/group p-1 rounded hover:bg-black/5">
+              <X size={16} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -64,9 +66,9 @@ function Header() {
   }, [query])
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur bg-white/80 border-b border-teal-50">
+    <header className="sticky top-0 z-40">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center gap-4">
+        <div className="glass mt-2 px-4 flex h-16 items-center gap-4 rounded-xl">
           <button className="lg:hidden p-2 -ml-2" onClick={() => setMobileOpen(v=>!v)} aria-label="Open Menu"><Menu/></button>
           <div className="shrink-0 font-semibold tracking-wide text-teal-900">
             Rockflowerpaper Wholesale
@@ -76,9 +78,9 @@ function Header() {
               <div key={item.slug} className="group relative py-5">
                 <a href={`/#/collections/${item.slug}`} className="hover:text-teal-900">{item.name}</a>
                 {item.children && item.children.length > 0 && (
-                  <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition pointer-events-none group-hover:pointer-events-auto absolute left-0 top-full mt-2 bg-white shadow-xl border rounded-xl p-5 grid grid-cols-2 gap-4 min-w-[420px]">
+                  <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition pointer-events-none group-hover:pointer-events-auto absolute left-0 top-full mt-2 glass rounded-xl p-5 grid grid-cols-2 gap-4 min-w-[420px]">
                     {item.children.map((c) => (
-                      <a key={c.slug} href={`/#/collections/${c.slug}`} className="block px-2 py-2 rounded hover:bg-teal-50 text-teal-900/80 hover:text-teal-900">
+                      <a key={c.slug} href={`/#/collections/${c.slug}`} className="block px-2 py-2 rounded hover:bg-white/40 text-teal-900/80 hover:text-teal-900">
                         {c.name}
                       </a>
                     ))}
@@ -88,14 +90,14 @@ function Header() {
             ))}
           </div>
           <div className="ml-auto relative flex-1 max-w-xl">
-            <div className="flex items-center gap-2 rounded-full border border-teal-200 bg-white px-3 py-2 shadow-sm focus-within:ring-2 ring-teal-200">
+            <div className="flex items-center gap-2 rounded-full border border-teal-200 bg-white/60 backdrop-blur px-3 py-2 shadow-sm focus-within:soft-ring">
               <Search className="text-teal-700" size={18} />
               <input value={query} onChange={(e)=>setQuery(e.target.value)} placeholder="Search wholesale products…" className="w-full outline-none placeholder:text-teal-900/40 text-sm bg-transparent" />
             </div>
             {suggestions.length>0 && (
-              <div className="absolute mt-2 w-full bg-white border rounded-xl shadow-md p-2 z-50">
+              <div className="absolute mt-2 w-full glass rounded-xl p-2 z-50">
                 {suggestions.map((s,i)=>(
-                  <a key={i} href={s.href} className="block px-3 py-2 rounded hover:bg-teal-50 text-sm text-teal-900/80">{s.label}</a>
+                  <a key={i} href={s.href} className="block px-3 py-2 rounded hover:bg-white/40 text-sm text-teal-900/80">{s.label}</a>
                 ))}
               </div>
             )}
@@ -107,7 +109,7 @@ function Header() {
         </div>
 
         {mobileOpen && (
-          <div className="lg:hidden border-t py-3 grid gap-2 text-teal-900/90">
+          <div className="lg:hidden mt-2 glass rounded-xl border-t py-3 grid gap-2 text-teal-900/90 px-4">
             {(nav.items||[]).map((item) => (
               <details key={item.slug} className="px-1">
                 <summary className="cursor-pointer py-2 text-sm">{item.name}</summary>
@@ -138,20 +140,20 @@ function Hero() {
   if (!slides.length) return null
   const current = slides[index]
   return (
-    <section className="bg-teal-50/40">
+    <section className="bg-transparent">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 grid lg:grid-cols-2 gap-6 items-center">
-        <div className="aspect-[16/10] lg:aspect-[4/3] w-full overflow-hidden rounded-2xl shadow">
+        <div className="aspect-[16/10] lg:aspect-[4/3] w-full overflow-hidden rounded-2xl pastel-card hover-lift">
           <img src={current.image} alt={current.title} className="h-full w-full object-cover" />
         </div>
         <div className="flex flex-col gap-4">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-teal-950 tracking-tight">{current.title}</h1>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-teal-950 tracking-tight fade-in-up">{current.title}</h1>
           <p className="text-teal-900/70 text-lg">{current.description}</p>
           <div>
             <a href={current.cta_href} className="inline-flex items-center gap-2 rounded-full bg-teal-700 text-white px-5 py-3 shadow hover:bg-teal-800 transition">{current.cta_label}</a>
           </div>
           <div className="flex items-center gap-2 pt-4">
-            <button aria-label="Prev" onClick={()=>setIndex(i => (i-1+slides.length)%slides.length)} className="p-2 rounded-full border text-teal-800 hover:bg-white"><ChevronLeft/></button>
-            <button aria-label="Next" onClick={()=>setIndex(i => (i+1)%slides.length)} className="p-2 rounded-full border text-teal-800 hover:bg-white"><ChevronRight/></button>
+            <button aria-label="Prev" onClick={()=>setIndex(i => (i-1+slides.length)%slides.length)} className="p-2 rounded-full border text-teal-800 hover:bg-white/70 backdrop-blur"><ChevronLeft/></button>
+            <button aria-label="Next" onClick={()=>setIndex(i => (i+1)%slides.length)} className="p-2 rounded-full border text-teal-800 hover:bg-white/70 backdrop-blur"><ChevronRight/></button>
           </div>
         </div>
       </div>
@@ -167,11 +169,11 @@ function CategoryTiles() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {tiles.map((t) => (
-            <a key={t.slug} href={`/#/collections/${t.slug}`} className="group relative block aspect-[4/5] overflow-hidden rounded-2xl shadow">
+            <a key={t.slug} href={`/#/collections/${t.slug}`} className="group relative block aspect-[4/5] overflow-hidden rounded-2xl pastel-card hover-lift">
               <img src={t.image} alt={t.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-teal-950/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-teal-950/30 via-transparent to-transparent" />
               <div className="absolute bottom-3 left-3 right-3">
-                <div className="inline-flex rounded-full bg-white/90 px-3 py-1 text-teal-900 text-sm font-medium shadow">{t.name}</div>
+                <div className="inline-flex rounded-full glass px-3 py-1 text-teal-900 text-sm font-medium">{t.name}</div>
               </div>
             </a>
           ))}
@@ -189,11 +191,11 @@ function IconBar() {
     { icon: <Truck/>, label: 'Fast Wholesale Shipping' },
   ]
   return (
-    <section className="bg-white">
+    <section className="bg-transparent">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {items.map((it,i)=>(
-            <div key={i} className="flex items-center gap-3 rounded-xl border border-teal-100 bg-teal-50/40 px-4 py-3">
+            <div key={i} className="flex items-center gap-3 rounded-xl glass px-4 py-3 hover-lift">
               <div className="text-teal-800">{it.icon}</div>
               <div className="text-sm font-medium text-teal-900/90">{it.label}</div>
             </div>
@@ -215,7 +217,7 @@ function FeaturedRail() {
         </div>
         <div className="flex gap-4 overflow-x-auto pb-2 snap-x">
           {items.map((it)=> (
-            <a key={it.slug} href={`/#/collections/${it.slug}`} className="snap-start shrink-0 w-64 group rounded-2xl overflow-hidden border bg-white shadow-sm">
+            <a key={it.slug} href={`/#/collections/${it.slug}`} className="snap-start shrink-0 w-64 group rounded-2xl overflow-hidden pastel-card hover-lift">
               <div className="aspect-[4/3] overflow-hidden">
                 <img src={it.image} alt={it.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105"/>
               </div>
@@ -234,14 +236,16 @@ function CampaignBanner() {
   return (
     <section className="relative">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-2xl">
+        <div className="relative overflow-hidden rounded-2xl pastel-card">
           <img src={data.image} alt={data.title} className="w-full h-[320px] sm:h-[420px] object-cover"/>
-          <div className="absolute inset-0 bg-gradient-to-r from-teal-950/50 via-teal-900/30 to-transparent"/>
-          <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-center max-w-xl text-white">
-            <h3 className="text-2xl sm:text-3xl font-semibold">{data.title}</h3>
-            <p className="mt-2 text-white/85">{data.subtitle}</p>
-            <div className="mt-5">
-              <a href={data.cta_href} className="inline-flex items-center gap-2 rounded-full bg-white/95 text-teal-900 px-5 py-3 font-medium shadow hover:bg-white">{data.cta_label}</a>
+          <div className="absolute inset-0 bg-gradient-to-r from-teal-950/40 via-teal-900/20 to-transparent"/>
+          <div className="absolute inset-0 p-6 sm:p-10 flex flex-col justify-center max-w-xl text-teal-950">
+            <div className="glass rounded-2xl p-5 sm:p-6 inline-block">
+              <h3 className="text-2xl sm:text-3xl font-semibold">{data.title}</h3>
+              <p className="mt-2 text-teal-900/80">{data.subtitle}</p>
+              <div className="mt-5">
+                <a href={data.cta_href} className="inline-flex items-center gap-2 rounded-full bg-teal-700 text-white px-5 py-3 font-medium shadow hover:bg-teal-800">{data.cta_label}</a>
+              </div>
             </div>
           </div>
         </div>
@@ -257,13 +261,13 @@ function ShopTheLook() {
   return (
     <section className="py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="relative rounded-2xl overflow-hidden">
+        <div className="relative rounded-2xl pastel-card overflow-hidden">
           <img src={data.image} alt="Shop the look" className="w-full h-[420px] object-cover" />
           {(data.hotspots||[]).map((h, idx)=> (
             <div key={idx} style={{ left: `${h.position.x}%`, top: `${h.position.y}%` }} className="absolute -translate-x-1/2 -translate-y-1/2">
-              <button onClick={()=> setActive(active===idx? null : idx)} className="h-5 w-5 rounded-full bg-white shadow ring-2 ring-teal-700" aria-label="Hotspot"></button>
+              <button onClick={()=> setActive(active===idx? null : idx)} className="h-5 w-5 rounded-full bg-white shadow ring-2 ring-teal-700 hover:soft-ring transition" aria-label="Hotspot"></button>
               {active===idx && (
-                <div className="mt-2 w-64 rounded-xl bg-white shadow-xl border overflow-hidden">
+                <div className="mt-2 w-64 rounded-xl glass overflow-hidden">
                   {h.image && <img src={h.image} alt={h.title} className="w-full h-32 object-cover"/>}
                   <div className="p-3">
                     <div className="font-medium text-teal-950">{h.title}</div>
@@ -282,13 +286,13 @@ function ShopTheLook() {
 
 function Footer() {
   return (
-    <footer className="bg-teal-50/60 border-t">
+    <footer className="border-t/0">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div>
+        <div className="glass rounded-xl p-5">
           <div className="font-semibold text-teal-950">Rockflowerpaper Wholesale</div>
           <p className="mt-2 text-sm text-teal-900/70">Coastal-inspired lifestyle and apparel for retailers.</p>
         </div>
-        <div>
+        <div className="glass rounded-xl p-5">
           <div className="font-semibold text-teal-950 mb-3">Learn More</div>
           <nav className="grid gap-2 text-sm text-teal-900/80">
             <a href="#contact" className="hover:text-teal-900">Contact Us</a>
@@ -296,14 +300,14 @@ function Footer() {
             <a href="#policies" className="hover:text-teal-900">Wholesale Policies</a>
           </nav>
         </div>
-        <div>
+        <div className="glass rounded-xl p-5">
           <div className="font-semibold text-teal-950 mb-3">Wholesale Newsletter</div>
           <form onSubmit={(e)=>{e.preventDefault(); alert('Subscribed')}} className="flex gap-2">
-            <input type="email" required placeholder="Your work email" className="flex-1 rounded-full border border-teal-200 bg-white px-4 py-2 text-sm outline-none focus:ring-2 ring-teal-200" />
+            <input type="email" required placeholder="Your work email" className="flex-1 rounded-full border border-teal-200 bg-white/70 backdrop-blur px-4 py-2 text-sm outline-none focus:soft-ring" />
             <button className="rounded-full bg-teal-700 text-white px-4 py-2 text-sm hover:bg-teal-800">Sign Up</button>
           </form>
         </div>
-        <div>
+        <div className="glass rounded-xl p-5">
           <div className="font-semibold text-teal-950 mb-3">Follow Us</div>
           <div className="flex gap-3 text-teal-900/80">
             <a href="#" className="hover:text-teal-900">LinkedIn</a>
@@ -312,14 +316,14 @@ function Footer() {
           </div>
         </div>
       </div>
-      <div className="border-t py-4 text-center text-xs text-teal-900/60">© {new Date().getFullYear()} Rockflowerpaper Wholesale</div>
+      <div className="py-4 text-center text-xs text-teal-900/60">© {new Date().getFullYear()} Rockflowerpaper Wholesale</div>
     </footer>
   )
 }
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-teal-900">
+    <div className="min-h-screen bg-coastal text-teal-900">
       <PromoBar />
       <Header />
       <Hero />
